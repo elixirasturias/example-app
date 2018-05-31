@@ -18,7 +18,7 @@ defmodule ExampleAppWeb.SessionController do
       {:ok, user} ->
         conn
         |> Plug.sign_in(user)
-        |> put_flash(:success, gettext("Welcome to Multi Tenancex!"))
+        |> put_flash(:success, gettext("Welcome to Example App!"))
         |> redirect(to: page_path(conn, :index))
 
       {:error, message} ->
