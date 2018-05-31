@@ -12,16 +12,25 @@ config :example_app,
 # Configures the endpoint
 config :example_app, ExampleAppWeb.Endpoint,
   url: [host: "localhost"],
-  secret_key_base: "VvoE2ECdd7kSgKnMrbxl3qyBCO9kPPOcu7daljna798IkCNeD9rn13GcdZ3o9vG1",
+  secret_key_base:
+    "VvoE2ECdd7kSgKnMrbxl3qyBCO9kPPOcu7daljna798IkCNeD9rn13GcdZ3o9vG1",
   render_errors: [view: ExampleAppWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: ExampleApp.PubSub,
-           adapter: Phoenix.PubSub.PG2]
+  pubsub: [name: ExampleApp.PubSub, adapter: Phoenix.PubSub.PG2]
 
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:user_id]
 
+# Guardian configuration
+config :example_app, ExampleApp.Guardian,
+  issuer: "example_app",
+  secret_key: "eP/Fjhc5Ns4WsmYqBqwvC51oA0i/aXYeobBLn8V7Rrtyddfct48rimYbVQj28MAX"
+
+config :example_app, ExampleAppWeb.AuthPipeline,
+  module: ExampleAppWeb.Guardian,
+  error_handler: ExampleAppWeb.AuthErrorHandler
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
-import_config "#{Mix.env}.exs"
+import_config "#{Mix.env()}.exs"
